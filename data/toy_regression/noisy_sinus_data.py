@@ -28,11 +28,12 @@ class myData(Dataset):
         x_train, y_train, x_test, y_test = self.make_data(
             n_train,
             shuffle_train=shuffle,
-            f=lambda x: x.cos(), # x.pow(3)/350, 
+            f=f, # x.pow(3)/350, 
             fracs =  fracs,
             stds = stds,
             spreads = spreads,
-            offsets = offsets
+            offsets = offsets, 
+            right_lim = train_inter[-1]
         )
         
         in_data = np.vstack([x_train, x_test])

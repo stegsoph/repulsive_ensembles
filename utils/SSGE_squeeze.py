@@ -55,13 +55,16 @@ class SpectralSteinEstimator():
         if self.eta is not None:
             Kxx += self.eta * torch.eye(xm.size(-2)).to(self.device)
 
-        eigen_vals, eigen_vecs = torch.eig(Kxx, eigenvectors=True)
-        L_complex, V_complex = torch.linalg.eig(A)
+        # eigen_vals, eigen_vecs = torch.eig(Kxx, eigenvectors=True)
+        # print(eigen_vecs.dtype, eigen_vecs )
+        
+        eigen_vals, eigen_vecs = torch.linalg.eig(Kxx)
+        eigen_vals = torch.view_as_real(eigen_vals)
+        eigen_vecs  = eigen_vecs.real
 
         if self.num_eigs is not None:
             eigen_vals = eigen_vals[:self.num_eigs]
             eigen_vecs = eigen_vecs[:, :self.num_eigs]
-
 
 
         # Compute the Monte Carlo estimate of the gradient of
@@ -70,7 +73,7 @@ class SpectralSteinEstimator():
 
         beta = - torch.sqrt(M) * eigen_vecs.t() @ dKxx_dx_avg
         beta *= (1. / eigen_vals[:, 0].unsqueeze(-1))
-
+        
         return beta, eigen_vals, eigen_vecs
 
     def compute_score_gradients(self, x, xm = None):
