@@ -23,7 +23,7 @@ def train(data, ensemble, device, config,writer):
 # --------------------------------------------------------------------------------
     x_test_0 = torch.tensor(data.get_test_inputs(), dtype=torch.float).to(device)
     y_test_0 = torch.tensor(data.get_test_outputs(), dtype=torch.float).to(device)
-
+    
 # --------------------------------------------------------------------------------
 # SETTING PROBABILISTIC and UTILS
 # --------------------------------------------------------------------------------
@@ -129,8 +129,10 @@ def train(data, ensemble, device, config,writer):
                 writer.add_scalar('train/langevin_noise', torch.mean(langevin_noise.abs()), i)
                 #writer.add_scalar('train/bandwith', K.h, i)
 
-            pred_tensor = ensemble.forward(torch.tensor(x_test_0, dtype=torch.float))[0]
+            # pred_tensor = ensemble.forward(torch.tensor(x_test_0, dtype=torch.float))[0]
+            pred_tensor = ensemble.forward(x_test_0.detach().clone())[0]
+
             plot_predictive_distributions(config,writer,i,data, x_test_0.cpu().squeeze(), pred_tensor.cpu().mean(0).squeeze(),
-                                              pred_tensor.cpu().std(0).squeeze(), save_fig=True,
+                                              pred_tensor.cpu().std(0).squeeze(), save_fig=False,
                                               name=names[config.method])
             print('Train iter:',i, ' train mse:', train_loss, 'test mse', test_loss, flush = True)

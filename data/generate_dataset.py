@@ -1,5 +1,6 @@
 from data.toy_classification.generate_classification import generate_moons, generate_oned_gaussian, generate_twod_gaussian, generate_mnist, generate_f_mnist, generate_donuts, generate_split_mnist, generate_cifar, generate_svhn
 from data.toy_regression.generete_regression import generate_1d_dataset
+from data.toy_regression.generate_1d_sinus import generate_sinus
 
 
 def generate_dataset(config):
@@ -16,6 +17,11 @@ def generate_dataset(config):
         classification = False
         return generate_1d_dataset(show_plots=True, task_set=4,
                                  data_random_seed=config.data_random_seed), classification
+    
+    elif config.dataset == 'noisy_sinus':
+        classification = False
+        return generate_sinus(), classification
+        
     elif config.dataset == 'moons':
         classification = True
         return generate_moons(config), classification

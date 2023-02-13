@@ -1,8 +1,18 @@
 import os
+import sys
+
 from datetime import datetime
 import torch
 import torch.nn.functional as F
 from tensorboardX import SummaryWriter
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+torch.manual_seed(42)
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
 from utils.config import configuration
 from data.generate_dataset import generate_dataset
 from models.MLP import Net
@@ -59,9 +69,9 @@ def run():
 
     train(data, ensemble, device, config,writer)
 
-    #particles = ensemble.particles.detach().numpy()
+    # #particles = ensemble.particles.detach().numpy()
 
-    #np.save(date+'.np', particles)
+    # #np.save(date+'.np', particles)
 
 if __name__ == '__main__':
     run()

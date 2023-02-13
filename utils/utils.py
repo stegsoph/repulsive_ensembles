@@ -46,6 +46,7 @@ def plot_predictive_distributions(config,writer,step,data, inputs,
 
 
     train_range = data.train_x_range
+    
     range_offset = (train_range[1] - train_range[0]) * 0.05
     sample_x, sample_y = data._get_function_vals( \
         x_range=[train_range[0] - range_offset, train_range[1] + range_offset])
@@ -351,7 +352,7 @@ def ood_metrics_entropy(in_dis, out_dis,writer,config,step,name = None):
         
             if config.show_plots:
                 repair_canvas_and_show_fig(plt.gcf())
-                plt.savefig('ROC_curve'+name+'.pdf',bbox_inches='tight', format='pdf')
+                # plt.savefig('ROC_curve'+name+'.pdf',bbox_inches='tight', format='pdf')
         return roc_auc, \
                 average_precision_score(y_true, -y_scores, pos_label=0), \
                 average_precision_score(y_true, y_scores, pos_label=1), \

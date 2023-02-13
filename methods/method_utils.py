@@ -3,7 +3,7 @@ from math import floor
 import torch
 
 from utils.SSGE_squeeze import SpectralSteinEstimator
-from f_SVGD import f_s_SVGD
+from methods.f_SVGD import f_s_SVGD
 from utils.kernel import RBF
 from methods.SVGD import SGLD, SGD, SVGD, SVGLD
 from methods.WGD import WGD, f_WGD

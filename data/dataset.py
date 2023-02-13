@@ -341,7 +341,7 @@ class Dataset(ABC):
         if self._batch_gen_train is None:
             self.reset_batch_generator(train=True, test=False, val=False)
 
-        batch_inds = np.fromiter(self._batch_gen_train, np.int,
+        batch_inds = np.fromiter(self._batch_gen_train, int,
                                  count=batch_size)
         ret = [self._data['in_data'][batch_inds, :],
                self._get_outputs(self._data['out_data'][batch_inds, :],
@@ -371,7 +371,7 @@ class Dataset(ABC):
         if self._batch_gen_test is None:
             self.reset_batch_generator(train=False, test=True, val=False)
 
-        batch_inds = np.fromiter(self._batch_gen_test, np.int,
+        batch_inds = np.fromiter(self._batch_gen_test, int,
                                  count=batch_size)
         ret = [self._data['in_data'][batch_inds, :],
                self._get_outputs(self._data['out_data'][batch_inds, :],
@@ -406,7 +406,7 @@ class Dataset(ABC):
         if self._batch_gen_val is None:
             self.reset_batch_generator(train=False, test=False, val=True)
 
-        batch_inds = np.fromiter(self._batch_gen_val, np.int,
+        batch_inds = np.fromiter(self._batch_gen_val, int,
                                  count=batch_size)
         ret = [self._data['in_data'][batch_inds, :],
                self._get_outputs(self._data['out_data'][batch_inds, :],

@@ -31,7 +31,7 @@ class Unorm_post():
             if pred_idx == 1:
                 #loss = -(T.expand_as(pred[1])*F.log_softmax(pred[1],2)).sum((1,2))/X.shape[0]
                 #loss = (-(T.expand_as(pred[1])*F.log_softmax(pred[1],2))).max(2)[0].sum(1)/X.shape[0]
-                loss = torch.stack([F.nll_loss(F.log_softmax(p), T.argmax(1)) for p in pred[1]])
+                loss = torch.stack([F.nll_loss(F.log_softmax(p, dim=1), T.argmax(1)) for p in pred[0]])
             else:
                 #loss = -(T.expand_as(pred[0]) * torch.log(pred[0]+1e-15)).sum((1, 2)) / X.shape[0]
                 #loss = -(torch.log(pred[0]+1e-15)[T.expand_as(pred[0]).type(torch.ByteTensor)].reshape(pred[0].shape[:-1])).sum(1)/ X.shape[0]
@@ -88,7 +88,7 @@ class Unorm_post_hyper():
             if pred_idx == 1:
                 #loss = -(T.expand_as(pred[1])*F.log_softmax(pred[1],2)).sum((1,2))/X.shape[0]
                 #loss = (-(T.expand_as(pred[1])*F.log_softmax(pred[1],2))).max(2)[0].sum(1)/X.shape[0]
-                loss = torch.stack([F.nll_loss(F.log_softmax(p), T.argmax(1)) for p in pred[1]])
+                loss = torch.stack([F.nll_loss(F.log_softmax(p, dim=1), T.argmax(1)) for p in pred[1]])
             else:
                 #loss = -(T.expand_as(pred[0]) * torch.log(pred[0]+1e-15)).sum((1, 2)) / X.shape[0]
                 #loss = -(torch.log(pred[0]+1e-15)[T.expand_as(pred[0]).type(torch.ByteTensor)].reshape(pred[0].shape[:-1])).sum(1)/ X.shape[0]
