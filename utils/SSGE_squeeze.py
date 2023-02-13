@@ -56,6 +56,7 @@ class SpectralSteinEstimator():
             Kxx += self.eta * torch.eye(xm.size(-2)).to(self.device)
 
         eigen_vals, eigen_vecs = torch.eig(Kxx, eigenvectors=True)
+        L_complex, V_complex = torch.linalg.eig(A)
 
         if self.num_eigs is not None:
             eigen_vals = eigen_vals[:self.num_eigs]
